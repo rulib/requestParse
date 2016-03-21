@@ -9,8 +9,11 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/whoami/', function(req, res, next) {
     //ternary to handle weird browsers like lynx
+  console.log(req.headers);
   var userAgentSoftware = (req.headers["user-agent"].split(/[(]|[)]/)[1] ? req.headers["user-agent"].split(/[(]|[)]/)[1] : req.headers["user-agent"]);
-  res.json({software:userAgentSoftware});
+  var ipaddress = req.headers["x-forwarded-for"];
+  var language = req.headers["accept-language"].split(",")[0];
+  res.json({ipaddress:ipaddress,software:userAgentSoftware,language:language});
   
 });
 
